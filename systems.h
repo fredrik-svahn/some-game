@@ -47,17 +47,15 @@ public:
                 glMatrixMode(GL_PROJECTION);
                 glPushMatrix();
                 glLoadIdentity();
-                glOrtho(
-                    0, 50, 0, 50, 0, 0
-                );
 
+                glScalef(sprite->w/w, sprite->h/h, 1);
                 glTranslatef(position->x, position->y, position->z);
                 glBegin(GL_QUADS);
                     glColor3f(color->r, color->g, color->b);
-                    glVertex3f(0, 1, 0);
+                    glVertex3f(-1, 1, 0);
                     glVertex3f(1, 1, 0);
-                    glVertex3f(1, 0, 0);
-                    glVertex3f(0, 0, 0);
+                    glVertex3f(1, -1, 0);
+                    glVertex3f(-1, -1, 0);
                 glEnd();
                 glPopMatrix();
         });
