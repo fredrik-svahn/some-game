@@ -6,16 +6,18 @@
 #include <GL/freeglut.h>
 #include <ctime>
 #include <iostream>
+#include "WorldHandler.h"
 
 using namespace ECS;
 
-World* world = World::createWorld();
+#define FPS 60
+
+WorldHandler* handler = new WorldHandler();
 
 clock_t begin = clock();
 clock_t end = clock();
 
 void display() {
-
     glutSwapBuffers();
 }
 
@@ -24,22 +26,25 @@ void update(int value) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     end = clock();
-    world->tick(end - begin);
+    handler->getCurrent()->tick(end - begin);
     begin = clock();
 
     glutPostRedisplay();
-    glutTimerFunc(100, update, 0);
+    glutTimerFunc(1000 / FPS, update, 0);
 }
 
 int main(int argc, char** argv) {
+    World* world = World::createWorld();
+    handler->registerWorld("game", world);
+
     world->registerSystem(new MovementSystem());
     world->registerSystem(new SpriteSystem());
 
     Entity* e = world->create();
-    e->assign<Sprite>(50,50);
-    e->assign<Color>(1,0,0);
-    e->assign<Velocity>(0.01,0.01);
-    e->assign<Position>(0,0);
+    e->assign<Sprite>(100,100);
+    e->assign<Color>(1,1,0);
+    e->assign<Velocity>(0.2,0,0);
+    e->assign<Position>(0,0,0);
 
     glutInit(&argc, argv);
     glutInitWindowSize(1000, 1000);
@@ -52,3 +57,12 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
+class ChangeWorldSubscriber : public EventSubscriber<ChangeWorldEvent> {
+public:
+    virtual ~ChangeWorldSubscriber() {}
+
+    virtual void receive(World* world, const ChangeWorldEvent& event) {
+        handler->currentWorld = event.world;
+    }
+};
