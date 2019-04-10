@@ -26,7 +26,6 @@ public:
             ) {
             position->x += velocity->x * deltaTime / 1000;
             position->y += velocity->y * deltaTime / 1000;
-            position->z += velocity->z * deltaTime / 1000;
         });
     }
 };
@@ -47,15 +46,16 @@ public:
                 glMatrixMode(GL_PROJECTION);
                 glPushMatrix();
                 glLoadIdentity();
-
                 glScalef(sprite->w/w, sprite->h/h, 1);
-                glTranslatef(position->x, position->y, position->z);
+                glTranslatef(position->x, position->y, 0);
+
+                glMatrixMode(GL_MODELVIEW);
                 glBegin(GL_QUADS);
                     glColor3f(color->r, color->g, color->b);
-                    glVertex3f(-1, 1, 0);
-                    glVertex3f(1, 1, 0);
-                    glVertex3f(1, -1, 0);
-                    glVertex3f(-1, -1, 0);
+                    glVertex2f(-1, 1);
+                    glVertex2f(1, 1);
+                    glVertex2f(1, -1);
+                    glVertex2f(-1, -1);
                 glEnd();
                 glPopMatrix();
         });

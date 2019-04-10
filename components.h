@@ -1,10 +1,9 @@
 #include <string>
 
 struct Position {
-    Position(double x, double y, double z): x(x), y(y), z(z) {}
+    Position(double x, double y): x(x), y(y) {}
     double x;
     double y;
-    double z;
 };
 
 struct ChangeWorldEvent {
@@ -12,10 +11,9 @@ struct ChangeWorldEvent {
 };
 
 struct Velocity {
-    Velocity(double x, double y, double z): x(x), y(y), z(z) {}
+    Velocity(double x, double y): x(x), y(y) {}
     double x;
     double y;
-    double z;
 };
 
 struct Color {

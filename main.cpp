@@ -42,9 +42,9 @@ int main(int argc, char** argv) {
 
     Entity* e = world->create();
     e->assign<Sprite>(40,40);
-    e->assign<Color>(1,1,0);
-    e->assign<Velocity>(-0.2,0,0);
-    e->assign<Position>(0,0,0);
+    e->assign<Color>(1,0.2,0);
+    e->assign<Velocity>(0,0);
+    e->assign<Position>(0,0);
 
     glutInit(&argc, argv);
     glutInitWindowSize(1000, 1000);
