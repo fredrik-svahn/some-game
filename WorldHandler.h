@@ -1,7 +1,6 @@
-#include "./include/ECS.h"
-#include <string>
-using namespace ECS;
+#include "headers.h"
 
+using namespace ECS;
 class WorldHandler {
 public:
     std::string currentWorld;

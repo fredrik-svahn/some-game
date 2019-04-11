@@ -1,19 +1,12 @@
-#include "./include/ECS.h"
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#include <GL/freeglut.h>
-#include "components.h"
-
 #define _USE_MATH_DEFINES
+#define E ComponentHandle
 
+
+#include "headers.h"
+#include "components.h"
 #include <math.h>
 
 using namespace ECS;
-
-#define _USE_MATH_DEFINES
-
-#define E ComponentHandle
 
 class MovementSystem : public EntitySystem {
 public:

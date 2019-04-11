@@ -1,18 +1,26 @@
-#include "./include/ECS.h"
-#include "systems.h"
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#include <GL/freeglut.h>
-#include <ctime>
-#include <iostream>
+#define STB_IMAGE_IMPLEMENTATION
+#define FPS 60
+
+#include "headers.h"
 #include "WorldHandler.h"
+#include "systems.h"
 
 using namespace ECS;
 
-#define FPS 60
-
 WorldHandler* handler = new WorldHandler();
+
+int load(const char* file) {
+    unsigned int texture;
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
+
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    return texture;
+}
 
 clock_t begin = clock();
 clock_t end = clock();
@@ -34,6 +42,8 @@ void update(int value) {
 }
 
 int main(int argc, char** argv) {
+    int playersprite = load("./assets/player.png");
+
     World* world = World::createWorld();
     handler->registerWorld("game", world);
 
